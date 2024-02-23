@@ -43,11 +43,8 @@ app.get("/recipes", async (req, res) => {
 
 // Delete a recipe
 app.delete("/recipes/:id", async (req, res) => {
-  const id = req.params.id;
-  console.log(id);
-
   await pool.query(
-    `DELETE FROM recipes WHERE id = ${id} RETURNING *`,
+    `DELETE FROM recipes WHERE id = ${req.params.id} RETURNING *`,
     (error, result) => {
       if (error) {
         throw error;
