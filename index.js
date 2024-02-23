@@ -18,7 +18,7 @@ app.post("/recipes", async (req, res) => {
   const recipe = req.body;
 
   await pool.query(
-    `INSERT INTO recipes(name) VALUES(${recipe.name}) RETURNING *`,
+    `INSERT INTO recipes(name) VALUES("${recipe.name}") RETURNING *`,
     (error, result) => {
       if (error) {
         throw error;
