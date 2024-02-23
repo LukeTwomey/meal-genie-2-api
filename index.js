@@ -46,7 +46,7 @@ app.put("/recipes", async (req, res) => {
   const recipe = req.body;
 
   await pool.query(
-    `UPDATE recipes SET name = ${recipe.name} WHERE id = ${recipe.id} RETURNING *`,
+    `UPDATE recipes SET name = '${recipe.name}' WHERE id = ${recipe.id} RETURNING *`,
     (error, result) => {
       if (error) {
         throw error;
