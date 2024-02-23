@@ -14,6 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Add a new recipe
 app.post("/recipes", async (req, res) => {
   const recipe = req.body;
 
@@ -29,6 +30,7 @@ app.post("/recipes", async (req, res) => {
   );
 });
 
+// Fetch all recipes
 app.get("/recipes", async (req, res) => {
   await pool.query("SELECT * FROM recipes", (error, results) => {
     if (error) {
@@ -37,6 +39,23 @@ app.get("/recipes", async (req, res) => {
 
     res.send(results.rows);
   });
+});
+
+// Delete a recipe
+app.delete("/recipes:id", async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+
+  await pool.query(
+    `DELETE FROM recipes WHERE id = ${id} RETURNING *`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      res.send(result.rows);
+    }
+  );
 });
 
 app.listen(process.env.PORT || 8081, function () {
