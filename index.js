@@ -15,23 +15,21 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/recipes", async (req, res) => {
-  console.log(req);
   const recipe = req.body;
-  console.log(recipe);
 
-  // await pool.query(
-  //   `INSERT INTO recipes(name) VALUES(${recipe.name} RETURNING *`,
-  //   (error, result) => {
-  //     if (error) {
-  //       throw error;
-  //     }
+  await pool.query(
+    `INSERT INTO recipes(name) VALUES(${recipe.name} RETURNING *`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
 
-  //     console.log(result);
-  //     console.log(result.rows);
+      console.log(result);
+      console.log(result.rows);
 
-  //     res.send(result.rows);
-  //   }
-  // );
+      res.send(result.rows);
+    }
+  );
 });
 
 app.get("/recipes", async (req, res) => {
