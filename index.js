@@ -24,9 +24,6 @@ app.post("/recipes", async (req, res) => {
         throw error;
       }
 
-      console.log(result);
-      console.log(result.rows);
-
       res.send(result.rows);
     }
   );
