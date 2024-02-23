@@ -13,7 +13,7 @@ const pool = new pg.Pool({
 const app = express();
 app.use(cors());
 
-app.get("/fetch-recipes", async (req, res) => {
+app.get("/recipes", async (req, res) => {
   await pool.query("SELECT * FROM recipes", (error, results) => {
     if (error) {
       throw error;
