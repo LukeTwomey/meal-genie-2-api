@@ -14,9 +14,9 @@ const app = express();
 app.use(cors());
 
 app.post("/recipes", async (req, res) => {
+  console.log(req);
   const recipe = req.body;
   console.log(recipe);
-  console.log(recipe.name);
 
   await pool.query(
     `INSERT INTO recipes(name) VALUES(${recipe.name} RETURNING *`,
