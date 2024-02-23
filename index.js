@@ -41,6 +41,22 @@ app.get("/recipes", async (req, res) => {
   });
 });
 
+// Edit existing recipe
+app.put("/recipes", async (req, res) => {
+  const recipe = req.body;
+
+  await pool.query(
+    `UPDATE recipes SET name = ${recipe.name} WHERE id = ${recipe.id} RETURNING *`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      res.send(result.rows);
+    }
+  );
+});
+
 // Delete a recipe
 app.delete("/recipes/:id", async (req, res) => {
   await pool.query(
