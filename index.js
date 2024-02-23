@@ -13,6 +13,26 @@ const pool = new pg.Pool({
 const app = express();
 app.use(cors());
 
+app.post("/recipes", async (req, res) => {
+  const recipe = req.body;
+  console.log(recipe);
+  console.log(recipe.name);
+
+  await pool.query(
+    `INSERT INTO recipes(name) VALUES(${recipe.name} RETURNING *`,
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+
+      console.log(result);
+      console.log(result.rows);
+
+      res.send(result.rows);
+    }
+  );
+});
+
 app.get("/recipes", async (req, res) => {
   await pool.query("SELECT * FROM recipes", (error, results) => {
     if (error) {
